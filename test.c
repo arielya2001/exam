@@ -1,1 +1,1 @@
-printf
+printf("nigger");
