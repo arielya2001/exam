@@ -171,7 +171,67 @@ void num2str(unsigned int num, char *str){
 
     }
 }
+//linked list
+typedef struct Node{
+    int data;
+    struct Node* next;
+} Node;
 
+// node ** because the node itself is a pointer, so we need the adress of it.
+void deleteFirst(Node **h){
+    if(!*h){
+        return ;
+    }
+    Node *p = *h; // נוד זמני שיהיה הראש
+    *h = p->next; // h points to the next node
+    free(p);
+}
+//create new node
+Node* newNode(int data, Node *next){
+    Node *p = (Node*)malloc(sizeof(Node));
+    p->data = data;
+    p->next = next;
+    return p;
+}
+//insert a new node in the end of the linked list
+void insertLast(int data, struct Node **head){
+    struct Node **p = head;
+    while(*p){
+        p = &((*p)->next);
+    }
+    *p = newNode(data,NULL);
+}
+//one approach
+void delete1(struct Node **head, int data){
+    struct Node **p = head;
+    while(*p){
+        if((*p)->data == data){
+            deleteFirst(head);
+        }
+        else{
+            p = &(*p)->next;
+        }
+    }
+}
+//second approach
+void delete2(int data, Node** h){
+    if (!*h){
+        return;
+    }
+    Node *p = *h;
+    Node **prev = h;
+    while (p){
+        if(p->data == data){
+            *prev = p->next; // skip the current one! prev is now points to the node after the next one
+            free(p);
+            p = *prev; // p is now points to the node after the next one as i said above
+        }
+        else{
+            prev = &(p->next);
+            p = p->next;
+        }
+    }
+}
 
 
 
