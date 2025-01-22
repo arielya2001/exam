@@ -3,7 +3,8 @@
 #include <string.h> 
 #include <stdbool.h> 
 #include <stdlib.h> 
-#define MAX_NUMBERS 100 
+#define MAX_NUMBERS 100
+#define MAX_SIZE 100 
 #define N
 
 void swap(void *a, void *b, size_t size){
@@ -77,25 +78,25 @@ int targil9(){
     printf("NOT FOUND.\n");
 }
 
-void targil10(int arr[N][N]){
-    int ans = 0;
-    for(int i=0;i<N;i++){
-            if(i==4){
-            break;
-        }
-        int current = 0;
-        for(int j=1;j<N;j++){
-            if(arr[j][i] >=arr[j-1][i]){
-                current++;
-            }
-        }
-        if(current > ans){
-            ans = current;
-        }
-    }
-    printf("the answer is: %d\n",ans);
+// void targil10(int arr[N][N]){
+//     int ans = 0;
+//     for(int i=0;i<N;i++){
+//             if(i==4){
+//             break;
+//         }
+//         int current = 0;
+//         for(int j=1;j<N;j++){
+//             if(arr[j][i] >=arr[j-1][i]){
+//                 current++;
+//             }
+//         }
+//         if(current > ans){
+//             ans = current;
+//         }
+//     }
+//     printf("the answer is: %d\n",ans);
 
-}
+// }
 
 int len1(int arr[], int *last){
     return (last - arr)+1;
@@ -233,26 +234,128 @@ void delete2(int data, Node** h){
     }
 }
 
+union Data{
+    char chars[21];
+    int numbers[6];
+};
+
+struct BitField{
+    unsigned bit : 1; 
+};
+
+unsigned and_using_bitfields(unsigned x, unsigned y, int n) {
+    struct BitField bitX, bitY; // Define two bitfield structures
+
+    // Extract the n-th bit of x and y using bitwise shift
+    bitX.bit = (x >> n) & 1;
+    bitY.bit = (y >> n) & 1;
+
+    // Perform AND operation on the extracted bits
+    unsigned result = bitX.bit & bitY.bit;
+
+    // Return the result of the AND operation
+    return result;
+}
+
+unsigned and_using_masks(unsigned x, unsigned y, int n) {
+    int result = 0;
+    for(int i =0;i<n;i++){
+        unsigned bit_x  = (x>>i) &1;
+
+
+    }
+}
+
+struct BitField2{
+    unsigned int type : 3;
+    unsigned int color : 4;
+    unsigned int wheels : 3;
+    unsigned int electric : 1;
+};
+
+void opp(){
+    FILE *f = fopen("myfile.bin", "rb");
+    if (f == NULL){
+        printf("Unable to open file\n");
+        return;
+    }
+    int num;
+    fread(&num,sizeof(int),1,f);
+    char string[num+1];
+    memset(string, 0, sizeof(string)); // Initialize with null terminators
+    fseek(f,sizeof(int),SEEK_SET);
+    fread(string, sizeof(char), num,f);
+    fclose(f);
+    for (int i =0;i<num/2;i++){
+        if(string[i]!=string[num-1-i]){
+            swap(&string[i], &string[num-1-i],sizeof(char));
+    }
+    }
+    FILE *f2 = fopen("myfile.bin", "ab");
+    if (f2 == NULL) {
+        printf("Unable to open file for appending\n");
+        return;
+    }
+    fwrite(string,sizeof(char),num,f2);
+    fclose(f2);
+    printf("the string is now: %s", string);
+}
+
+int is_same_files(char *name1, char *name2) {
+    FILE *f1, *f2;
+    int c1, c2;  // Use int to correctly store EOF
+    f1 = fopen(name1, "r");
+    f2 = fopen(name2, "r");
+
+    // Check if files are successfully opened
+    if (!f1 || !f2) {
+        if (f1) fclose(f1);  // Close f1 if it was opened
+        if (f2) fclose(f2);  // Close f2 if it was opened
+        return -1;  // Indicate an error in opening files
+    }
+
+    // Compare characters until a difference is found or EOF is reached
+    do {
+        c1 = fgetc(f1); //c1 = -1 if we reach EOF.
+        c2 = fgetc(f2);
+    } while (c1 != EOF && c2 != EOF && c1 == c2);
+
+    fclose(f1);
+    fclose(f2);
+
+    // If both files reached EOF, they are the same
+    return (c1 == EOF && c2 == EOF);
+}
 
 
 
-int main(){
-    // int a = 1, b = 2;
-    // int *arr[] = {&a, NULL, &b, NULL}; // Array of integer pointers
-    // int len = 4;
 
-    // int null_count = num(arr, len);
-    // printf("Number of NULL elements: %d\n", null_count);
-    // decline();
-    // targil9();
-    // char* str1 = "ariel           ";
-    // char* str2 = "yaacobi";
-    // char* ans = strcat1(str1,str2);
-    // for(int i =0;i<strlen(ans);i++){
-    //     printf("%c",ans[i]);
+
+
+int main() {
+    // int account;         // account number
+    // char name[30];       // account name
+    // double balance;      // account balance
+    // FILE *cfPtr;         // cfPtr = file pointer
+
+    // // Open the file. Exit program if unable to create file
+    // if ((cfPtr = fopen("account.txt", "w")) == NULL) {
+    //     printf("File could not be opened\n");
+    // } else {
+    //     printf("Enter the account, name, and balance.\n");
+    //     printf("Enter EOF to end input.\n");
+    //     printf(">> ");
+
+    //     // Write account, name, and balance into the file
+    //     while (!feof(stdin)) {
+    //         scanf("%d%s%lf", &account, name, &balance);
+    //         fprintf(cfPtr, "%d %s %.2f\n", account, name, balance);
+    //         printf(">> ");
+    //     }
+
+    //     fclose(cfPtr); // Close the file
     // }
-    // char arr[] = "Hello\0World!\0nigger\0";
-    // swap_first_last(arr);
-    // printf("%s\n",arr);
+    // opp();
     return 0;
 }
+
