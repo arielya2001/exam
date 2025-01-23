@@ -282,7 +282,7 @@ void opp(){
     int num;
     fread(&num,sizeof(int),1,f);
     char string[num+1];
-    memset(string, 0, sizeof(string)); // Initialize with null terminators
+    memset(string, 0, sizeof(string)); 
     fseek(f,sizeof(int),SEEK_SET);
     fread(string, sizeof(char), num,f);
     fclose(f);
@@ -299,6 +299,27 @@ void opp(){
     fwrite(string,sizeof(char),num,f2);
     fclose(f2);
     printf("the string is now: %s", string);
+}
+
+void oop2(){
+    FILE* fp = fopen("myfile.bin", "ab+");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1; 
+    }
+    int size = 0;
+    fread(&size, sizeof(size), 1, fp);
+
+    fseek(fp, -sizeof(char), SEEK_END);
+
+    for (int i = 0; i < size; i++) {
+        char ch;
+        fread(&ch, sizeof(ch), 1, fp);
+        fwrite(&ch, sizeof(ch), 1, fp);
+        fseek(fp, -2 * (i + 1) * sizeof(char) - 1, SEEK_END); //everytime read and write char to file, in the end it's appending the string in opposite order
+    }
+
+    fclose(fp);
 }
 
 int is_same_files(char *name1, char *name2) {
