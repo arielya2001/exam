@@ -1,0 +1,10 @@
+{
+    "makefile.makefilePath": "makefile",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/sibo/Desktop/tirgul/Assigments/A_1/Debug_code",
+            "binaryPath": "/home/sibo/Desktop/tirgul/Assigments/A_1/Debug_code/program",
+            "binaryArgs": []
+        }
+    ]
+}

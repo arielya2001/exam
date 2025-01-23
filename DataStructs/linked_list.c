@@ -29,6 +29,7 @@ void append(LinkedList *list, int value) {
     list->size++;
 }
 
+//insert to the head
 void prepend(LinkedList *list, int value) {
     Node *newNode = (Node *)malloc(sizeof(Node));
     if (!newNode) {
