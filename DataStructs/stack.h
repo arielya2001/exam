@@ -5,7 +5,7 @@
 
 typedef struct {
     int items[MAX_SIZE];
-    int top;
+    int top; //top index
 } Stack;
 
 void initStack(Stack *s);

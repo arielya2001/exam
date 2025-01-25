@@ -25,81 +25,54 @@ char* input() {
     return str;    
 }
 
-// typedef struct Node {
-//     void* data;          // Pointer to hold any type of data
-//     struct Node* next;   // Pointer to the next node in the queue
-// } Node;
+typedef struct {
+    int *items;
+    int front;
+    int rear;
+    int max_size;
+    int current_size;
+}Queue;
 
-// typedef struct {
-//     Node* front;         // Pointer to the front of the queue
-//     Node* rear;          // Pointer to the rear of the queue
-//     int size;            // Number of elements in the queue
-//     int current_size;
-// } Queue;
+void create(Queue* my_fifo, int size){
+    my_fifo->items = (int*)malloc(size*sizeof(int));
+    if(!my_fifo->items){
+        printf("malloc failed!");
+        return;
+    }
+    my_fifo->front = 0;
+    my_fifo->current_size = 0;
+    my_fifo->max_size = size;
+    my_fifo->rear = -1;
+}
+
+void enqueue(Queue* my_fifo, int data){
+    if(my_fifo->current_size == my_fifo->max_size){
+        printf("queue is full!");
+        return;
+    }
+    my_fifo->rear = (my_fifo->rear+1)%(my_fifo->max_size);
+    my_fifo->items[my_fifo->rear] = data;
+    my_fifo->current_size++;
+}
+void dequeue(Queue* my_fifo){
+    if(my_fifo->current_size==0){
+        printf("queue empty");
+        return;
+    }
+    my_fifo->front = (my_fifo->front+1)%(my_fifo->max_size);    
+    my_fifo->current_size--;
+}
 
 
 
-// void create_queue(int size, Queue *queue){
-//     queue->size = size;
-//     queue->front = NULL;
-//     queue->rear = NULL;
-//     queue->current_size = 0;
-// }
 
-// // Function to add an element to the queue
-// void enqueue(Queue* queue, void* data) {
-//     if (queue->current_size == queue->size) {
-//         printf("Queue is full! Cannot enqueue.\n");
-//         return;
-//     }
 
-//     Node* new_node = (Node*)malloc(sizeof(Node)); // Allocate memory for a new node
-//     if (!new_node) {
-//         printf("Memory allocation failed.\n");
-//         return;
-//     }
 
-//     new_node->data = data;  // Assign the data
-//     new_node->next = NULL;  // New node points to NULL
 
-//     if (queue->rear) {
-//         queue->rear->next = new_node; // Attach the new node to the rear
-//     } else {
-//         queue->front = new_node;      // If the queue is empty, front points to the new node
-//     }
 
-//     queue->rear = new_node;  // Update the rear pointer
-//     queue->current_size++;   // Increment the size of the queue
-// }
 
-// // Function to remove an element from the queue
-// void* dequeue(Queue* queue) {
-//     if (queue->front == NULL) {
-//         printf("Queue is empty! Cannot dequeue.\n");
-//         return NULL;
-//     }
 
-//     Node* temp = queue->front;        // Get the front node
-//     void* data = temp->data;          // Retrieve the data from the front node
-//     queue->front = queue->front->next; // Move the front pointer to the next node
 
-//     if (!queue->front) {              // If the queue becomes empty
-//         queue->rear = NULL;           // Update the rear pointer to NULL
-//     }
-
-//     free(temp);                       // Free the memory of the dequeued node
-//     queue->current_size--;            // Decrement the size of the queue
-
-//     return data;                      // Return the dequeued data
-// }
-
-// // Function to free all memory used by the queue
-// void free_queue(Queue* queue) {
-//     while (queue->front != NULL) {
-//         dequeue(queue); // Repeatedly dequeue and free memory
-//     }
-//     printf("Queue has been cleared.\n");
-// }
 
 
 
