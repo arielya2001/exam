@@ -54,13 +54,15 @@ void enqueue(Queue* my_fifo, int data){
     my_fifo->items[my_fifo->rear] = data;
     my_fifo->current_size++;
 }
-void dequeue(Queue* my_fifo){
+int dequeue(Queue* my_fifo){
     if(my_fifo->current_size==0){
         printf("queue empty");
         return;
     }
+    int val = my_fifo->items[my_fifo->front];
     my_fifo->front = (my_fifo->front+1)%(my_fifo->max_size);    
     my_fifo->current_size--;
+    return val;
 }
 
 
