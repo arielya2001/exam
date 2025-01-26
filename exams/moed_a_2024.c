@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_SIZE 100
+#define MASK 248 
 
 // int main(int argc,char **argv){
 //     if(argc==1){
@@ -136,6 +137,87 @@ void print_all(){
     printf("answer is: %d%ld",ans->elem1,ans->elem2);
 }
 
+
+void bits_ex(){
+    int ArrOne[8] = {0};
+    int ArrTwo[8] = {0};
+    unsigned val=0;
+    for(int i = 0;i<8;i++){
+        int number1;
+        printf("enter a number for array1: \n");
+        scanf("%d",&number1);
+        ArrOne[i] = number1;
+    }
+    int temp[8] = {0};
+    for(int j=0;j<8;j++){
+        int number2;
+        printf("enter a number for array2, must be 1-8: \n");
+        scanf("%d",&number2);
+        while(number2<1 || number2>8 || temp[number2-1]==1){
+            printf("enter a number for array2, must be 1-8 and not used before!: \n");
+            scanf("%d",&number2);
+        }
+        ArrTwo[j] = number2;
+        temp[number2-1] = 1;
+    }
+    for(int i = 0;i<8;i++){
+        int index_bit_array2 = ArrTwo[i];
+        int number_work = ArrOne[i]; 
+        //now we need to take the index_bit_array2 bit from number_work
+        unsigned bit_extracted = (number_work >> index_bit_array2-1)&1;
+        //now i have the bit. we need to place him in the i-th index of val.
+        val|= (bit_extracted << i);
+        //setting the i-th bit of val to the bit we extracted!
+    } 
+}
+
+typedef struct{
+    unsigned int bit : 1; 
+}bitfield;
+
+void bits_with_bitfield(){
+    bitfield bitField;
+    int ArrOne[8] = {0};
+    int ArrTwo[8] = {0};
+    unsigned val=0;
+    for(int i = 0;i<8;i++){
+        int number1;
+        printf("enter a number for array1: \n");
+        scanf("%d",&number1);
+        ArrOne[i] = number1;
+    }
+    int temp[8] = {0};
+    for(int j=0;j<8;j++){
+        int number2;
+        printf("enter a number for array2, must be 1-8: \n");
+        scanf("%d",&number2);
+        while(number2<1 || number2>8 || temp[number2-1]==1){
+            printf("enter a number for array2, must be 1-8 and not used before!: \n");
+            scanf("%d",&number2);
+        }
+        ArrTwo[j] = number2;
+        temp[number2-1] = 1;
+    }
+    for(int i = 0;i<8;i++){
+        int index_bit_array2 = ArrTwo[i];
+        int number_work = ArrOne[i]; 
+        //now we need to take the index_bit_array2 bit from number_work
+        bitField.bit = (number_work >> index_bit_array2-1)&1;
+        //now i have the bit. we need to place him in the i-th index of val.
+        val|= (bitField.bit << i);
+        //setting the i-th bit of val to the bit we extracted!
+}
+}
+
+void calc(unsigned val){
+    //we have val, and we need to extract bits 3-7. i will use MASK as defind = 248
+    // i did 248 because 2^3 + 2^4 + ... + 2^7 = 248
+    int ans = (val & MASK)>>3;
+    printf("the answer is: %d", ans);
+}
+
+
+     
 
 
 
