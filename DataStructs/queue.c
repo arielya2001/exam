@@ -20,13 +20,13 @@ void enqueue(Queue *q, int value) {
         printf("Queue is full. Cannot enqueue %d.\n", value);
         return;
     }
-    q->rear = (q->rear + 1) % MAX_SIZE;
-    q->items[q->rear] = value;
-    q->size++;
+    q->rear = (q->rear + 1) % MAX_SIZE;//updating rear index
+    q->items[q->rear] = value; //putting in the array rear index the value
+    q->size++; //updating current size of queue
     printf("Enqueued: %d\n", value);
 }
 
-int dequeue(Queue *q) {
+int dequeue(Queue *q) { //remember that it's returning also
     if (isQueueEmpty(q)) {
         printf("Queue is empty. Cannot dequeue.\n");
         return -1;
